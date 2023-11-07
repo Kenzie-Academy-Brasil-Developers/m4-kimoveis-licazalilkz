@@ -1,15 +1,14 @@
 import { z } from "zod";
 
-export const scheduleSchema = z.object({
-  id: z.number().positive(),
-  date: z.string().nonempty(),
-  hour: z.string().nonempty(),
-  realEstateId: z.number().positive(),
-  userId: z.number().positive(),
+const scheduleSchema = z.object({
+  id: z.number().int().positive(),
+  date: z.string(),
+  hour: z.string(),
+  realEstateId: z.number().int().positive(),
+  userId: z.number().positive().int(),
 });
 
-export const scheduleCreateSchema = scheduleSchema.omit({
+export const ScheduleCreateSchema = scheduleSchema.omit({
   id: true,
   userId: true,
 });
-export const scheduleCreateWithUserIdSchema = scheduleSchema.omit({ id: true });

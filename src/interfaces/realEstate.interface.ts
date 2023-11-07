@@ -1,7 +1,9 @@
 import { z } from "zod";
-import { RealEstate } from "../entities";
-import { realEstateCreateSchema, realEstateCompleteSchema } from "../schema";
+import { RealEstateCreateSchema } from "../schema/realEstate.schema";
+import { Repository } from "typeorm";
+import { Address, RealEstate } from "../entities";
 
-export type RealEstateCreate = z.infer<typeof realEstateCreateSchema>;
-export type RealEstateCompleteSchema = z.infer<typeof realEstateCompleteSchema>;
-export type RealEstateList = Array<RealEstate>;
+export type CreateRealEstate = z.infer<typeof RealEstateCreateSchema>;
+
+export type RealEstateRepo = Repository<RealEstate>;
+export type AddressRepo = Repository<Address>;

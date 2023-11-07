@@ -1,6 +1,11 @@
 import { z } from "zod";
+import {
+  CategoryCreateSchema,
+  CategoryReadSchema,
+} from "../schema/category.schema";
+import { Repository } from "typeorm";
 import { Category } from "../entities";
-import { categoryCreateSchema } from "../schema";
 
-export type CategoryCreate = z.infer<typeof categoryCreateSchema>;
-export type CategoryList = Array<Category>;
+export type CreateCategory = z.infer<typeof CategoryCreateSchema>;
+export type ReadAllCategory = z.infer<typeof CategoryReadSchema>;
+export type CategoryRepo = Repository<Category>;

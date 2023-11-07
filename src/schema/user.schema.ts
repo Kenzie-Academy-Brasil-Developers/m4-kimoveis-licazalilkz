@@ -1,23 +1,24 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const userSchema = z.object({
-	id: z.number().positive(),
-	name: z.string().max(45).nonempty(),
-	email: z.string().email().max(45),
-	password: z.string().max(120).nonempty(),
-	admin: z.boolean().default(() => false),
-	createdAt: z.string().or(z.date()),
-	updatedAt: z.string().or(z.date()),
-	deletedAt: z.string().or(z.date()).nullable(),
+  id: z.number().positive(),
+  name: z.string().max(45).min(2),
+  email: z.string().max(45).email(),
+  password: z.string().max(120),
+  admin: z.boolean().default(false),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  deletedAt: z.string().nullable(),
 });
 
-export const userCreateSchema = userSchema.omit({
-	id: true,
-	createdAt: true,
-	updatedAt: true,
-	deletedAt: true,
+export const createUserSchema = userSchema.pick({
+  name: true,
+  email: true,
+  password: true,
+  admin: true,
 });
-export const userUpdateSchema = userCreateSchema.omit({ admin: true }).partial();
-export const userReadSchema = userSchema.omit({ password: true });
-export const userListSchema = userReadSchema.array();
-export const userLoginSchema = userSchema.pick({ email: true, password: true });
+export const userAdmin = createUserSchema.omit({ admin: true });
+export const updateUserSchema = userAdmin.partial();
+export const userReturnSchema = userSchema.omit({ password: true });
+export const userReturnListSchema = userReturnSchema.array();
+export const userReadSchema = userReturnSchema.array();
